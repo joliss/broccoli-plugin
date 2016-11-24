@@ -27,6 +27,7 @@ function Plugin(inputNodes, options) {
   this._baseConstructorCalled = true
   this._inputNodes = inputNodes
   this._persistentOutput = !!options.persistentOutput
+  this._createCacheDirectory = 'createCacheDirectory' in options ? !!options.createCacheDirectory : true
 
   this._checkOverrides()
 }
@@ -46,7 +47,8 @@ Plugin.prototype._checkOverrides = function() {
 // For future extensibility, we version the API using feature flags
 Plugin.prototype.__broccoliFeatures__ = Object.freeze({
   persistentOutputFlag: true,
-  sourceDirectories: true
+  sourceDirectories: true,
+  createCacheDirectoryFlag: true
 })
 
 // The Broccoli builder calls plugin.__broccoliGetInfo__
@@ -62,7 +64,8 @@ Plugin.prototype.__broccoliGetInfo__ = function(builderFeatures) {
     instantiationStack: this._instantiationStack,
     name: this._name,
     annotation: this._annotation,
-    persistentOutput: this._persistentOutput
+    persistentOutput: this._persistentOutput,
+    createCacheDirectory: this._createCacheDirectory
   }
 }
 
