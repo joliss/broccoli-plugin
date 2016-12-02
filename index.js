@@ -27,7 +27,7 @@ function Plugin(inputNodes, options) {
   this._baseConstructorCalled = true
   this._inputNodes = inputNodes
   this._persistentOutput = !!options.persistentOutput
-  this._createCacheDirectory = 'createCacheDirectory' in options ? !!options.createCacheDirectory : true
+  this._createCacheDirectory = (options.createCacheDirectory != null) ? !!options.createCacheDirectory : true
 
   this._checkOverrides()
 }
