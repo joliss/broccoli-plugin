@@ -53,7 +53,7 @@ Plugin.prototype.__broccoliFeatures__ = Object.freeze({
 
 // The Broccoli builder calls plugin.__broccoliGetInfo__
 Plugin.prototype.__broccoliGetInfo__ = function(builderFeatures) {
-  builderFeatures = this._checkBuilderFeatures(builderFeatures)
+  this.builderFeatures = this._checkBuilderFeatures(builderFeatures)
   if (!this._baseConstructorCalled) throw new Error('Plugin subclasses must call the superclass constructor: Plugin.call(this, inputNodes)')
 
   return {
@@ -83,7 +83,11 @@ Plugin.prototype._setup = function(builderFeatures, options) {
   this._builderFeatures = builderFeatures
   this.inputPaths = options.inputPaths
   this.outputPath = options.outputPath
-  this.cachePath = options.cachePath
+  if (!this.builderFeatures.createCacheDirectoryFlag) {
+    this.cachePath = this._createCacheDirectory ? options.cachePath : undefined
+  } else {
+    this.cachePath = options.cachePath
+  }
 }
 
 Plugin.prototype.toString = function() {
