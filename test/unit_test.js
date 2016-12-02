@@ -123,11 +123,7 @@ describe('unit tests', function() {
         createCacheDirectory: false
       })
 
-      var pluginInterface = node.__broccoliGetInfo__({
-        persistentOutputFlag: true,
-        sourceDirectories: true
-      })
-
+      var pluginInterface = node.__broccoliGetInfo__()
       expect(pluginInterface).to.have.property('createCacheDirectory', false)
     })
 
